@@ -1,3 +1,11 @@
+GIT
+  remote: https://github.com/ctran/annotate_models.git
+  revision: e60a66644e8a8ea5dccd6a398d31f22878233998
+  specs:
+    annotate (3.2.0)
+      activerecord (>= 3.2, < 8.0)
+      rake (>= 10.4, < 14.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -66,6 +74,7 @@ GEM
       i18n (>= 1.6, < 2)
       minitest (>= 5.1)
       tzinfo (~> 2.0)
+    bcrypt (3.1.19)
     bootsnap (1.16.0)
       msgpack (~> 1.2)
     builder (3.2.4)
@@ -100,6 +109,7 @@ GEM
     irb (1.8.3)
       rdoc
       reline (>= 0.3.8)
+    jwt (2.7.1)
     kaminari (1.2.2)
       activesupport (>= 4.1.0)
       kaminari-actionview (= 1.2.2)
@@ -228,11 +238,14 @@ PLATFORMS
   x86_64-darwin-22
 
 DEPENDENCIES
+  annotate!
+  bcrypt (~> 3.1.7)
   bootsnap
   database_cleaner
   debug
   factory_bot_rails
   faker
+  jwt
   kaminari (~> 1.2)
   pg (~> 1.1)
   puma (~> 5.0)
