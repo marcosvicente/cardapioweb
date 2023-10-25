@@ -5,4 +5,6 @@ Rails.application.routes.draw do
   # root "articles#index"
 
   get 'authentications/login'
+  resources :users
+
 end
