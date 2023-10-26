@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
-  before_action :authorize_request, except: :create
-  before_action :set_user, only: %i[show destroy]
+  before_action :set_user, only: %i[show update destroy]
 
   # GET /users
   def index
@@ -27,9 +26,10 @@ class UsersController < ApplicationController
 
   # PUT /users/{id}
   def update
-    unless @user.update(user_params)
-      render json: { errors: @user.errors.full_messages },
-             status: :unprocessable_entity
+    if @user.update(user_params)
+      render json: @user
+    else
+      render json: @user.errors, status: :unprocessable_entity
     end
   end
 
@@ -50,11 +50,11 @@ class UsersController < ApplicationController
       :name,
       :username,
       :email,
-      :password
+      :password,
+      :owner_id
     )
   end
 
-  # TODO refactory
   def paginate_params
     params.permit(
       :page, :per_page

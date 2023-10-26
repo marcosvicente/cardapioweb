@@ -1,20 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe "Authentications", type: :request do
-  let!(:user) { create(:user) }
+  let!(:owner) { create(:owner)}
+  let!(:current_user) { create(:user, :with_owner, owner: )}
 
   describe "GET /login" do
     context "should be access with email" do
       context "success" do
         it "returns http success" do
           get "/authentications/login",
-            params: { email: user.email, password: '123456' }    
+            params: { email: current_user.email, password: '123456' }
 
           expect(response).to have_http_status(:success)
 
           expect(response_body["token"]).to_not be_nil
-          expect(response_body["email"]).to eq(user.email)
-          expect(response_body["username"]).to eq(user.username)
+          expect(response_body["email"]).to eq(current_user.email)
+          expect(response_body["username"]).to eq(current_user.username)
           expect(response_body["exp"]).to_not be_nil
         end
       end
@@ -30,7 +31,7 @@ RSpec.describe "Authentications", type: :request do
 
         it "returns http unauthorized with password nil" do
           get "/authentications/login",
-            params: { email: user.email, password: nil }    
+            params: { email: current_user.email, password: nil }    
           
           expect(response).to have_http_status(:unauthorized)
           expect(response_body["error"]).to eq("unauthorized")
@@ -38,7 +39,7 @@ RSpec.describe "Authentications", type: :request do
 
         it "returns http unauthorized with password wrong" do
           get "/authentications/login",
-            params: { email: user.email, password: '9999999' }    
+            params: { email: current_user.email, password: '9999999' }    
           
           expect(response).to have_http_status(:unauthorized)
           expect(response_body["error"]).to eq("unauthorized")
@@ -50,12 +51,12 @@ RSpec.describe "Authentications", type: :request do
       context "success" do
         it "returns http success with username" do
           get "/authentications/login",
-            params: { username: user.username, password: '123456' }    
+            params: { username: current_user.username, password: '123456' }    
           
           expect(response).to have_http_status(:success)
           expect(response_body["token"]).to_not be_nil
-          expect(response_body["email"]).to eq(user.email)
-          expect(response_body["username"]).to eq(user.username)
+          expect(response_body["email"]).to eq(current_user.email)
+          expect(response_body["username"]).to eq(current_user.username)
           expect(response_body["exp"]).to_not be_nil
         end
       end
@@ -70,7 +71,7 @@ RSpec.describe "Authentications", type: :request do
 
         it "returns http unauthorized with password nil" do
           get "/authentications/login",
-            params: { username: user.username, password: nil }    
+            params: { username: current_user.username, password: nil }    
           
           expect(response).to have_http_status(:unauthorized)
           expect(response_body["error"]).to eq("unauthorized")
@@ -78,7 +79,7 @@ RSpec.describe "Authentications", type: :request do
 
         it "returns http unauthorized with password wrong" do
           get "/authentications/login",
-            params: { username: user.username, password: '9999999' }    
+            params: { username: current_user.username, password: '9999999' }    
           
           expect(response).to have_http_status(:unauthorized)
           expect(response_body["error"]).to eq("unauthorized")
