@@ -4,9 +4,9 @@
 #
 #  id            :bigint           not null, primary key
 #  address       :string
-#  lat           :string
+#  lat           :float
 #  logo          :string
-#  long          :string
+#  long          :float
 #  name          :string
 #  opening_hours :string
 #  created_at    :datetime         not null

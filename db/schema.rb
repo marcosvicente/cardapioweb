@@ -27,8 +27,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_26_115720) do
     t.string "name"
     t.string "opening_hours"
     t.string "address"
-    t.string "lat"
-    t.string "long"
+    t.float "lat"
+    t.float "long"
     t.bigint "owner_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

@@ -33,7 +33,6 @@ class ApplicationController < ActionController::API
   private
   def only_onwer_resource
     return true if current_user.try(:owner?)
-    debugger
     forbidden_error!
   end
 

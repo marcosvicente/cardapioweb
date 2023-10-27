@@ -4,9 +4,9 @@
 #
 #  id            :bigint           not null, primary key
 #  address       :string
-#  lat           :string
+#  lat           :float
 #  logo          :string
-#  long          :string
+#  long          :float
 #  name          :string
 #  opening_hours :string
 #  created_at    :datetime         not null
@@ -26,30 +26,40 @@ require 'rails_helper'
 RSpec.describe Restaurant, type: :model do
   it { is_expected.to belong_to(:owner).class_name('Owner') }
 
-  subject(:restaurant) { build(:restaurant) }
+  subject(:restaurant) { build(:restaurant, address: "Boituva") }
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:address) }
 
-  describe ".is_lat_log_filled?" do
-   xit "should be return error when lat filled e long not filled" do
-      restaurant.lat = Faker::Address.latitude
+  describe ".create_lat_long?" do
+    context "after_save" do
+      let(:restaurant_saved) { create(:restaurant, address: "Boituva") }
 
-      expect(restaurant).to be_invalid
-      expect(restaurant.errors.full_messages).to include("Latitude e Logitude tem que ser preechidos juntos")
+      it "should be call a worker" do
+        expect(GenerateLatLongGoogleMapsWorker).to have_enqueued_sidekiq_job(restaurant_saved.id)
+
+        expect {
+          GenerateLatLongGoogleMapsWorker.perform_async(restaurant_saved.id)
+        }.to change(GenerateLatLongGoogleMapsWorker.jobs, :size).by(1)
+      end
+      
     end
 
-    xit "should be return error when lat not filled e long filled" do
-      restaurant.long = Faker::Address.longitude
+    context "after_update" do
+      let!(:new_restaurant) do 
+        restaurant_updated = create(:restaurant)
+        params = attributes_for(:restaurant, address: "Londrina")
+        restaurant_updated.update(params)
+        restaurant_updated
+      end
 
-      expect(restaurant).to be_invalid
-      expect(restaurant.errors.full_messages).to include("Latitude e Logitude tem que ser preechidos juntos")
+      it "should be call a worker" do
+        expect(GenerateLatLongGoogleMapsWorker).to have_enqueued_sidekiq_job(new_restaurant.id)
+        
+        expect {
+          GenerateLatLongGoogleMapsWorker.perform_async(new_restaurant.id)
+        }.to change(GenerateLatLongGoogleMapsWorker.jobs, :size).by(1)
+      end
+      
     end
-
-    xit "should be return success when lat filled e long not filled" do
-      restaurant.lat = Faker::Address.latitude
-      restaurant.long = Faker::Address.longitude
-
-      expect(restaurant).to be_valid
-    end
-  end
+   end
 end

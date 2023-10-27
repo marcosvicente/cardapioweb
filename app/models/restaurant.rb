@@ -4,9 +4,9 @@
 #
 #  id            :bigint           not null, primary key
 #  address       :string
-#  lat           :string
+#  lat           :float
 #  logo          :string
-#  long          :string
+#  long          :float
 #  name          :string
 #  opening_hours :string
 #  created_at    :datetime         not null
@@ -31,11 +31,10 @@ class Restaurant < ApplicationRecord
   validates :logo, presence: true
   validates :opening_hours, presence: true
 
-  # validate :is_lat_log_filled?
+  after_save :create_lat_long!
+  after_update :create_lat_long!
 
-  def is_lat_log_filled?
-    if [self.lat, self.long].any?(&:blank?)
-      errors.add(:base, "Latitude e Logitude tem que ser preechidos juntos")
-    end
+  def create_lat_long!
+    GenerateLatLongGoogleMapsWorker.perform_async(self.id)
   end
 end

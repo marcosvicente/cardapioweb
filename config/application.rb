@@ -25,5 +25,11 @@ module Cardapioweb
     config.autoload_paths << "#{Rails.root}/lib"
 
     config.api_only = true
+
+
+    # Load dotenv only in development or test environment
+    if ['development', 'test'].include? ENV['RAILS_ENV']
+      Dotenv::Railtie.load
+    end
   end
 end

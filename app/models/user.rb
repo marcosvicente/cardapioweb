@@ -5,7 +5,7 @@
 #  id              :bigint           not null, primary key
 #  email           :string
 #  first_name      :string
-#  kind            :integer          default(0)
+#  kind            :integer          default("admin")
 #  last_name       :string
 #  password_digest :string
 #  username        :string
@@ -24,6 +24,7 @@
 class User < ApplicationRecord
   has_secure_password
   
+  # colocado o admin por questoes de test somente
   enum kind: [:admin, :owner]
 
   belongs_to :owner, optional: true

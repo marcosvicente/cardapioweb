@@ -19,7 +19,7 @@ gem "puma", "~> 5.0"
 gem "redis", "~> 4.0"
 
 # Queues
-gem 'sidekiq', '~> 5.2'
+gem 'sidekiq', '~> 7.0.3'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors', '~> 1.1'
@@ -61,6 +61,14 @@ gem "cancan"
 # Upload of files
 gem 'carrierwave', '~> 3.0'
 
+gem 'dotenv-rails', '~> 2.7'
+
+# google maps integration
+gem 'google-maps'
+
+# PORO, ServiceObjects, FormObjects Helper
+gem 'simple_command'
+
 group :development, :test do
   # See https://guides.rubyonrails.org/debugging_rails_applications.html#debugging-with-the-debug-gem
   gem "debug", platforms: %i[ mri mingw x64_mingw ]
@@ -78,4 +86,5 @@ end
 
 group :test do
   gem 'simplecov', require: false
+  gem 'rspec-sidekiq'
 end

@@ -1,8 +1,8 @@
 class RestaurantsController < ApplicationController
-  before_action :authorize_request
+  # before_action :authorize_request
 
   before_action :set_restaurant, only: %i[ show update destroy ]
-  before_action :only_onwer_resource
+  # before_action :only_onwer_resource
 
   # GET /restaurants
   def index

@@ -5,3 +5,18 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+
+owner  = FactoryBot.create(:owner)
+admin_user  = FactoryBot.create(
+  :user,
+  :admin,
+  email: "admin@email.com", 
+  password: 'teste1234')
+
+owner_user  = FactoryBot.create(
+  :user,
+  :owner,
+  owner:,
+  email: "owner@email.com", 
+  password:'teste1234'
+)

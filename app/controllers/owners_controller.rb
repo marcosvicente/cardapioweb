@@ -15,7 +15,6 @@ class OwnersController < ApplicationController
 
   # POST /owners
   def create
-    # debugger
     @owner = Owner.new(owner_params)
 
     if @owner.save

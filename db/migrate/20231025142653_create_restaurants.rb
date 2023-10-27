@@ -5,8 +5,8 @@ class CreateRestaurants < ActiveRecord::Migration[7.0]
       t.string :name
       t.string :opening_hours
       t.string :address
-      t.string :lat
-      t.string :long
+      t.float :lat
+      t.float :long
       t.references :owner, null: false, foreign_key: true
 
       t.timestamps

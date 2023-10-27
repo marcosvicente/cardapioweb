@@ -4,9 +4,9 @@
 #
 #  id            :bigint           not null, primary key
 #  address       :string
-#  lat           :string
+#  lat           :float
 #  logo          :string
-#  long          :string
+#  long          :float
 #  name          :string
 #  opening_hours :string
 #  created_at    :datetime         not null
@@ -27,11 +27,11 @@ FactoryBot.define do
   factory :restaurant do
     name { Faker::Company.name }
     address { Faker::Address.full_address }
-    opening_hours { "9h as 20h" }
+    opening_hours { "segunda à sexta das 10h às 17h e de sábado à domingo das 12h às 20h" }
     logo { arquivo_teste }
 
-    lat { "" }
-    long { "" }
+    lat { 0 }
+    long { 0 }
     owner { create(:owner) }
 
     trait :with_lat_long do
