@@ -2,6 +2,7 @@ require 'rails_helper'
 
 RSpec.describe GenerateLatLongGoogleMapsWorker, type: :worker do
   let!(:restaurant) { create(:restaurant, address: "Londrina") }
+  
   it "should be validate if save a lat e long" do
     described_class.new.perform(restaurant.id)
     restaurant.reload

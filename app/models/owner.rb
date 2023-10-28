@@ -1,15 +1,12 @@
 # == Schema Information
-#
-# Table name: owners
-#
-#  id         :bigint           not null, primary key
-#  email      :string
-#  name       :string
-#  phone      :string
-#  created_at :datetime         not null
-#  updated_at :datetime         not null
-#
+
 class Owner < ApplicationRecord
   has_many :restaurant
   validates :name, presence: true
+
+  def change_owner_restaurant!(restaurant_id, new_owner_id)
+    debugger
+    restaurant = Restaurant.find(restaurant_id)
+    restaurant.update(onwer_id: new_owner_id)
+  end
 end

@@ -17,8 +17,5 @@ FactoryBot.define do
     phone { Faker::PhoneNumber.cell_phone }
     sequence(:email) { |_n| Faker::Internet.email }
     
-    trait :with_restaurants do
-      restaurant { create_list(:restaurant, 2) }
-    end
   end
 end

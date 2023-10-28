@@ -13,4 +13,7 @@ Rails.application.routes.draw do
   get 'authentications/login'
   resources :users
 
+  get "administrations/:id/restaurants_owner", to: "administrations#restaurants_owner"
+  put "administrations/change_restaurant_to_owner", to: "administrations#change_restaurant_to_owner"
+  get "administrations/get_opened_restaurant", to: "administrations#get_opened_restaurant"
 end
